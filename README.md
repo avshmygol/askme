@@ -2,7 +2,7 @@
 
 ____
 
-Application "askme" is learning clone askme.fm
+The "askme" is a training clone of the application "askme.fm"
 
 ____
 
@@ -19,9 +19,16 @@ ____
 
 ## Database
 
-Edit database.yml from database.yml.example
+Rename the database.yml.example file to the database.yml file.
+Edit the database.yml file to configure for your database.
 
 ```
-  db:create
-  rails db:migration
+  rails db:create
+  rails db:migrate
+```
+
+## Start server
+
+```
+rails s
 ```
