@@ -14,7 +14,7 @@ ____
 ## Update gems
 
 ```
-  bundle
+bundle
 ```
 
 ## Database
@@ -23,8 +23,8 @@ Rename the database.yml.example file to the database.yml file.
 Edit the database.yml file to configure for your database.
 
 ```
-  rails db:create
-  rails db:migrate
+rails db:create
+rails db:migrate
 ```
 
 ## Start server
