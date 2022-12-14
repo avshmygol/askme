@@ -1,24 +1,22 @@
 # README
+____
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Application "askme" is learning clone askme.fm
 
-Things you may want to cover:
+____
 
-* Ruby version
+## Versions
+* Ruby version 3.1.2
+* Rails version 7.0.4
 
-* System dependencies
+## Settings
+```
+  bundle
+```
 
-* Configuration
+  Create database.yml from database.yml.example
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+  db:create
+  rails db:migration
+```
