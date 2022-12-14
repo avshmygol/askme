@@ -1,4 +1,5 @@
 # README
+
 ____
 
 Application "askme" is learning clone askme.fm
@@ -6,15 +7,19 @@ Application "askme" is learning clone askme.fm
 ____
 
 ## Versions
+
 * Ruby version 3.1.2
 * Rails version 7.0.4
 
-## Settings
+## Update gems
+
 ```
   bundle
 ```
 
-  Create database.yml from database.yml.example
+## Database
+
+Edit database.yml from database.yml.example
 
 ```
   db:create
