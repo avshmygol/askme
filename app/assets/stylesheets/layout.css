@@ -1,12 +1,12 @@
 body {
-  background: #03071e;
+  background: #03071E;
   display: flex;
   justify-content: center;
 }
 
 .wrapper {
-  margin: 40px;
   max-width: 800px;
+  margin: 40px;
   width: 100%;
 }
 

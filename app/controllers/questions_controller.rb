@@ -35,6 +35,15 @@ class QuestionsController < ApplicationController
     redirect_to questions_path
   end
 
+  def hide
+    @question.update(
+      hidden: true
+    )
+    # @question.save
+
+    redirect_to question_path(@question)
+  end
+
 private
 
   def question_params
