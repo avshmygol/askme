@@ -27,9 +27,3 @@ Edit the database.yml file to configure for your database.
 rails db:create
 rails db:migrate
 ```
-
-## Start server
-
-```
-rails s
-```
