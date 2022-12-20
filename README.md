@@ -15,12 +15,12 @@ ____
 
 ```
 bundle
-bundle exec rails assets:precompile
+bundle exec rails assets:precompile (for Production)
 ```
 
 ## Database
 
-Rename the database.yml.example file to the database.yml file.
+Copy the database.yml.example file to the database.yml file.
 Edit the database.yml file to configure for your database.
 
 ```

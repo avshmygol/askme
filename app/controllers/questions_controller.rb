@@ -1,12 +1,12 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: %i[show edit update destroy]
+  before_action :set_question, only: %i[show edit update hide view destroy]
 
   def index
+    @question = Question.new
     @questions = Question.all
   end
 
   def show
-    #
   end
 
   def new
@@ -14,37 +14,39 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.create(question_params)
+    question = Question.create(question_params)
 
-    redirect_to question_path(@question)
+    redirect_to question_path(question), notice: 'Новый вопрос создан!'
   end
 
   def edit
-    #
   end
 
   def update
     @question.update(question_params)
 
-    redirect_to question_path(@question)
+    redirect_to question_path(@question), notice: 'Сохранили вопрос!'
+  end
+
+  def hide
+    @question.update(hidden: true)
+
+    redirect_to root_path, notice: 'Вопрос скрыт!'
+  end
+
+  def view
+    @question.update(hidden: false)
+
+    redirect_to root_path, notice: 'Вопрос раскрыт!'
   end
 
   def destroy
     @question.destroy
 
-    redirect_to questions_path
+    redirect_to questions_path, notice: 'Вопрос удалён!'
   end
 
-  def hide
-    @question.update(
-      hidden: true
-    )
-    # @question.save
-
-    redirect_to question_path(@question)
-  end
-
-private
+  private
 
   def question_params
     params.require(:question).permit(:body, :user_id)
