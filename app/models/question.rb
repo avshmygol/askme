@@ -1,5 +1,5 @@
 class Question < ApplicationRecord
-  def hidden?
-    hidden
-  end
+  belongs_to :user
+
+  validates :body, presence: true, length: { maximum: 280 }
 end

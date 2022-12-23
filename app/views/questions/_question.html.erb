@@ -2,18 +2,28 @@
   <%= question.body %>
 </div>
 
+<% if question.answer.present? %>
+  <div class="mb-sm text-dark-red">
+    <%= question.answer %>
+  </div>
+<% end %>
+
 <div class="text-sm question-footer">
   <div class="text-grey">
     <%= l(question.created_at, format: :short) %>
   </div>
 
-  <div>
-    <%= link_to fa_icon('pencil 2x'), edit_question_path(question), title: 'Изменить вопрос' %>
-    <%= button_to(fa_icon('eye-slash 2x'), hide_question_path(question), method: :put, title: 'Скрыть вопрос') unless question.hidden? %>
-    <%= button_to(fa_icon('eye 2x'), view_question_path(question), method: :put, title: 'Отобразить вопрос') if question.hidden? %>
-    <%= button_to fa_icon('trash-o 2x'), question_path(question), method: :delete,
+  <% if current_user == question.user %>
+    <div>
+      <% edit_icon = (question.answer.present? ? 'pencil 2x' : 'reply 2x') %>
+      <% edit_title = (question.answer.present? ? 'Изменить вопрос' : 'Ответить') %>
+
+      <%= link_to fa_icon(edit_icon), edit_question_path(question),
+        title: edit_title, class: 'mr-sm' %>
+      <%= button_to(fa_icon('eye-slash 2x'), toggle_hide_question_path(question), method: :put, title: 'Скрыть вопрос') unless question.hidden? %>
+      <%= button_to(fa_icon('eye 2x'), toggle_hide_question_path(question), method: :put, title: 'Отобразить вопрос') if question.hidden? %>
+      <%= button_to fa_icon('trash-o 2x'), question_path(question), method: :delete,
   title: 'Удалить вопрос', form: {data: {turbo_confirm: 'Точно удалить вопрос?'}} %>
-  </div>
-
-
+    </div>
+  <% end %>
 </div>

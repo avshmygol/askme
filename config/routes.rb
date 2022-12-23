@@ -1,13 +1,10 @@
 Rails.application.routes.draw do
-  root to: "questions#index"
+  root to: 'questions#index'
 
   resources :questions do
-    member do
-      put :hide
-      put :view
-    end
+    put :toggle_hide, on: :member
   end
 
   resource :session, only: %i[new create destroy]
-  resources :users, only: %i[new create edit update destroy]
+  resources :users, except: %i[index]
 end
