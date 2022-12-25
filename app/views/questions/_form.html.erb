@@ -1,4 +1,5 @@
 <%= form_with model: question do |form| %>
+  <%= form.hidden_field :author_id %>
   <%= form.hidden_field :user_id %>
 
   <p><%= form.label :body, 'Текст вопроса' %></p>

@@ -3,8 +3,8 @@ class UsersController < ApplicationController
   before_action :authorize_user, only: %i[edit update destroy]
 
   def show
-    @questions = @user.questions
-    @question = Question.new(user: @user)
+    @questions = @user.questions.order(:id)
+    @question = Question.new(author: @user, user: @user)
   end
 
   def new
@@ -58,7 +58,7 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(
-      :name, :nickname, :email, :password, :password_confirmation
+      :name, :nickname, :email, :header_color, :password, :password_confirmation
     )
   end
 end

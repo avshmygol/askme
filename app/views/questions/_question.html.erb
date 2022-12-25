@@ -1,5 +1,9 @@
 <div class="mb-sm">
-  <%= question.body %>
+  Спрашивает <%= link_to display_nickname(question.author), user_path(question.author), class: 'mr-sm' %>
+</div>
+
+<div class="mb-sm">
+  <%= h(question.body).gsub(/\n/, "<br/>").html_safe %>
 </div>
 
 <% if question.answer.present? %>
