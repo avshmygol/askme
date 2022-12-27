@@ -12,13 +12,13 @@
 
 ActiveRecord::Schema[7.0].define(version: 2022_12_24_123114) do
   create_table "questions", force: :cascade do |t|
-    t.integer "author_id", null: false
+    t.integer "author_id"
     t.integer "user_id", null: false
-    t.text "body"
+    t.text "body", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "answer"
-    t.boolean "hidden", default: false
+    t.boolean "hidden", default: false, null: false
     t.index ["author_id"], name: "index_questions_on_author_id"
     t.index ["user_id"], name: "index_questions_on_user_id"
   end

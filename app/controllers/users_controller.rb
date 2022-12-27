@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   def show
     @questions = @user.questions.order(:id)
-    @question = Question.new(author: @user, user: @user)
+    @question = Question.new(author: nil, user: @user)
   end
 
   def new
