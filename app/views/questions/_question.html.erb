@@ -1,5 +1,9 @@
 <div class="mb-sm">
-  Спрашивает <%= link_to display_nickname(question.author), user_path(question.author), class: 'mr-sm' %>
+  <% if question.author.nil? %>
+    Анонимно
+  <% else %>
+    Спрашивает <%= link_to display_nickname(question.author), user_path(question.author), class: 'mr-sm' %>
+  <% end %>
 </div>
 
 <div class="mb-sm">

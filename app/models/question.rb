@@ -1,5 +1,5 @@
 class Question < ApplicationRecord
-  belongs_to :author, class_name: 'User'
+  belongs_to :author, class_name: 'User', optional: true
   belongs_to :user
 
   private

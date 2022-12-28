@@ -1,10 +1,10 @@
 <%= form_with model: question do |form| %>
-  <% unless question.author_id.nil? %>
+  <% unless question.author.nil? %>
     <%= form.hidden_field :author_id %>
   <% end %>
   <%= form.hidden_field :user_id %>
 
-  <% question.author_id.nil? ? placeholder = "Анонимный вопрос" : placeholder = "Вопрос от @#{current_user.nickname}" %>
+  <% question.author.nil? ? placeholder = "Анонимный вопрос" : placeholder = "Вопрос от @#{current_user.nickname}" %>
 
   <p><%= form.label :body, 'Текст вопроса' %></p>
   <p><%= form.text_area :body, rows: 5, class: "form-text-area", placeholder: placeholder %></p>

@@ -8,8 +8,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    params[:question][:author_id] = nil if params[:question][:author_id] == ""
-    question_params = params.require(:question).permit(:body, :user_id)
+    question_params = params.require(:question).permit(:author_id, :body, :user_id)
 
     @question = Question.new(question_params)
 
