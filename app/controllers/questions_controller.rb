@@ -12,12 +12,18 @@ class QuestionsController < ApplicationController
 
     @question = Question.new(question_params)
 
-    if @question.save
-      redirect_to user_path(@question.user), notice: 'Новый вопрос создан!'
-    else
-      flash[:alert] = 'Вы неправильно заполнили поле с текстом вопроса (максимум 280 символов)'
+    unless author_valid?(@question.author_id)
+      flash[:alert] = 'Неправильно указан автор вопроса'
 
       redirect_to user_path(@question.user)
+    else
+      if @question.save
+        redirect_to user_path(@question.user), notice: 'Новый вопрос создан!'
+      else
+        flash[:alert] = 'Вы неправильно заполнили поле с текстом вопроса (максимум 280 символов)'
+
+        redirect_to user_path(@question.user)
+      end
     end
   end
 
@@ -63,4 +69,15 @@ class QuestionsController < ApplicationController
   def set_question_for_current_user
     @question = current_user.questions.find(params[:id])
   end
+
+  def author_valid?(author_id)
+    unless author_id.nil?
+      author = User.find(author_id)
+
+      author == current_user ? true : false
+    else
+      true
+    end
+  end
+
 end
