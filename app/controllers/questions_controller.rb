@@ -12,17 +12,18 @@ class QuestionsController < ApplicationController
 
     @question = Question.new(question_params)
 
-    unless author_valid?(@question.author_id)
-      flash[:alert] = 'Неправильно указан автор вопроса'
+    # Если вопрос не анонимный игнорируем id автора из формы (противодействие html инъекции)
+    @question.author = current_user unless @question.author.nil?
 
-      redirect_to user_path(@question.user)
+    if @question.save
+      redirect_to user_path(@question.user), notice: 'Новый вопрос добавлен'
     else
-      if @question.save
-        redirect_to user_path(@question.user), notice: 'Новый вопрос создан!'
-      else
-        flash[:alert] = 'Вы неправильно заполнили поле с текстом вопроса (максимум 280 символов)'
+      flash[:alert] = 'Допущены ошибки в вопросе'
 
+      if @question.author.nil?
         redirect_to user_path(@question.user)
+      else
+        redirect_to new_question_path(user_id: @question.user)
       end
     end
   end
@@ -30,9 +31,19 @@ class QuestionsController < ApplicationController
   def update
     question_params = params.require(:question).permit(:body, :answer)
 
-    @question.update(question_params)
+    @question.assign_attributes(question_params)
 
-    redirect_to user_path(@question.user), notice: 'Сохранили вопрос!'
+    if @question.save
+      redirect_to user_path(@question.user), notice: 'Вопрос сохранён'
+    else
+      flash[:alert] = 'Допущены ошибки в вопросе'
+
+      if @question.author.nil?
+        redirect_to user_path(@question.user)
+      else
+        redirect_to edit_question_path(@question)
+      end
+    end
   end
 
   def toggle_hide
@@ -69,15 +80,4 @@ class QuestionsController < ApplicationController
   def set_question_for_current_user
     @question = current_user.questions.find(params[:id])
   end
-
-  def author_valid?(author_id)
-    unless author_id.nil?
-      author = User.find(author_id)
-
-      author == current_user ? true : false
-    else
-      true
-    end
-  end
-
 end
