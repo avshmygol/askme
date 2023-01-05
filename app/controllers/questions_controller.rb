@@ -38,11 +38,7 @@ class QuestionsController < ApplicationController
     else
       flash[:alert] = 'Допущены ошибки в вопросе'
 
-      if @question.author.nil?
-        redirect_to user_path(@question.user)
-      else
-        redirect_to edit_question_path(@question)
-      end
+      redirect_to edit_question_path(@question)
     end
   end
 
