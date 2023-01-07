@@ -2,6 +2,39 @@ class QuestionsController < ApplicationController
   before_action :ensure_current_user, only: %i[update destroy edit]
   before_action :set_question_for_current_user, only: %i[update toggle_hide destroy edit]
 
+  def index
+    @question = Question.new
+    @questions = Question.all
+
+    # Destroy empty tags
+    tags = Tag.all
+    tags.each do |tag|
+      if tag.questions.empty?
+        record = Tag.find_by(name: tag.name)
+        record.destroy
+      end
+    end
+
+    @tags = Tag.order("name").all.map{ |tag| "#" + tag.name }.join(", ")
+  end
+
+  def toggle_hide
+    @question.toggle(:hidden).save
+
+    redirect_to user_path(@question.user), notice: @question.hidden? ? 'Вопрос скрыт!' : 'Вопрос отображён!'
+  end
+
+  def hashtags
+    @question = Question.new
+
+    @tag = Tag.find_by(name: params[:name].downcase)
+    @questions = @tag.questions
+  end
+
+  def show
+    @question = Question.find(params[:id])
+  end
+
   def new
     @user = User.find(params[:user_id])
     @question = Question.new(author: current_user, user: @user)
@@ -28,6 +61,9 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def edit
+  end
+
   def update
     question_params = params.require(:question).permit(:body, :answer)
 
@@ -42,29 +78,11 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def toggle_hide
-    @question.toggle(:hidden).save
-
-    redirect_to user_path(@question.user), notice: @question.hidden? ? 'Вопрос скрыт!' : 'Вопрос отображён!'
-  end
-
   def destroy
     @user = @question.user
     @question.destroy
 
     redirect_to user_path(@user), notice: 'Вопрос удалён!'
-  end
-
-  def show
-    @question = Question.find(params[:id])
-  end
-
-  def index
-    @question = Question.new
-    @questions = Question.all
-  end
-
-  def edit
   end
 
   private

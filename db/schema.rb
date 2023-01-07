@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_24_123114) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_07_095718) do
   create_table "questions", force: :cascade do |t|
     t.integer "author_id"
     t.integer "user_id", null: false
@@ -21,6 +21,21 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_24_123114) do
     t.boolean "hidden", default: false, null: false
     t.index ["author_id"], name: "index_questions_on_author_id"
     t.index ["user_id"], name: "index_questions_on_user_id"
+  end
+
+  create_table "questions_tags", id: false, force: :cascade do |t|
+    t.integer "question_id", null: false
+    t.integer "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_questions_tags_on_question_id"
+    t.index ["tag_id"], name: "index_questions_tags_on_tag_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -34,4 +49,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_24_123114) do
     t.index ["email"], name: "index_users_on_email"
   end
 
+  add_foreign_key "questions_tags", "questions"
+  add_foreign_key "questions_tags", "tags"
 end

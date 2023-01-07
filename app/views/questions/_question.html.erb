@@ -7,12 +7,12 @@
 </div>
 
 <div class="mb-sm">
-  <%= h(question.body).gsub(/\n/, "<br/>").html_safe %>
+  <%= h(render_with_hashtags(question.body)) %>
 </div>
 
 <% if question.answer.present? %>
   <div class="mb-sm text-dark-red">
-    <%= question.answer %>
+    <%= h(render_with_hashtags(question.answer)) %>
   </div>
 <% end %>
 
