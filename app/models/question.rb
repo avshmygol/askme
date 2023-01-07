@@ -12,7 +12,7 @@ class Question < ApplicationRecord
 
   def update_question_tags
     self.tags.clear
-    hashtags = (self.body + self.answer).downcase.scan(/#[[:word:]-]+/)
+    hashtags = ("#{self.body} #{self.answer.to_s}").downcase.scan(/#[[:word:]-]+/)
     hashtags.uniq.map do |hashtag|
       tag = Tag.find_or_create_by(name: hashtag.delete("#"))
       self.tags << tag
