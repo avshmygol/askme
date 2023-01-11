@@ -9,9 +9,9 @@ class Question < ApplicationRecord
   after_create :update_question_tags
   after_update :update_question_tags
 
-  validates :body, presence: true, length: { maximum: 280 }
+  private
 
-  # private
+  validates :body, presence: true, length: { maximum: 280 }
 
   def update_question_tags
     self.tags.clear

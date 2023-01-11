@@ -3,5 +3,7 @@ class Tag < ApplicationRecord
   has_many :group_tags
   has_many :questions, :through => :group_tags
 
+  private
+
   validates :name, presence: true, uniqueness: true, length: { maximum: 255 }
 end

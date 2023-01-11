@@ -7,9 +7,8 @@ production:
   adapter: postgresql
   encoding: unicode
   database: askme
-  poll: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: deploy
-  password: password
+  poll: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
