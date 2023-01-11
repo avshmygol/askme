@@ -11,7 +11,7 @@ namespace :setup do
     lines = File.readlines("#{__dir__}/001_initial_data.txt", encoding: "UTF-8", chomp: true)
 
     # Пользователь 1
-    user_1 = User.create!(
+    user1 = User.create!(
       name: lines[0],
       nickname: lines[1],
       email: lines[2],
@@ -19,7 +19,7 @@ namespace :setup do
     )
 
     # Пользователь 2
-    user_2 = User.create!(
+    user2 = User.create!(
       name: lines[4],
       nickname: lines[5],
       email: lines[6],
@@ -27,7 +27,7 @@ namespace :setup do
     )
 
     # Пользователь 3
-    user_3 = User.create!(
+    user3 = User.create!(
       name: lines[8],
       nickname: lines[9],
       email: lines[10],
@@ -35,17 +35,19 @@ namespace :setup do
     )
 
     # Вопрос 1
-    Question.create!(
+    q1 = Question.create(
       body: lines[12],
-      user: user_1
+      user: user1
     )
+    q1.save
 
     # Вопрос 2
-    Question.create!(
+    q2 = Question.create(
       body: lines[14],
-      user: user_1,
-      author_id: user_2.id
+      user: user1,
+      author_id: user2.id
     )
+    q2.save
 
   end
 end

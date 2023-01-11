@@ -3,8 +3,8 @@ class Question < ApplicationRecord
   belongs_to :user
 
   # Вопрос может иметь много тэгов (запрос через таблицу связей)
-  has_many :group_tags
-  has_many :tags, :through => :group_tags
+  has_many :questions_tags, dependent: :destroy
+  has_many :tags, through: :questions_tags
 
   after_create :update_question_tags
   after_update :update_question_tags
@@ -14,11 +14,11 @@ class Question < ApplicationRecord
   validates :body, presence: true, length: { maximum: 280 }
 
   def update_question_tags
-    self.tags.clear
-    hashtags = ("#{self.body} #{self.answer.to_s}").downcase.scan(/#[[:word:]-]+/)
+    tags.clear
+    hashtags = ("#{body} #{answer.to_s}").downcase.scan(/#[[:word:]-]+/)
     hashtags.uniq.map do |hashtag|
       tag = Tag.find_or_create_by(name: hashtag.delete("#"))
-      self.tags << tag
+      tags << tag
     end
   end
 end
