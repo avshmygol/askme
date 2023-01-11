@@ -27,27 +27,23 @@ class QuestionsController < ApplicationController
 
   def new
     @user = User.find(params[:user_id])
-    @question = Question.new(author: current_user, user: @user)
+    @question = Question.new(user: @user)
   end
 
   def create
-    question_params = params.require(:question).permit(:author_id, :user_id, :body)
+    question_params = params.require(:question).permit(:body, :user_id)
 
     @question = Question.new(question_params)
 
-    # Если вопрос не анонимный игнорируем id автора из формы (противодействие html инъекции)
-    @question.author = current_user unless @question.author.nil?
+    # Если пользователь не залогинен, то запишется nil (анонимный автор)
+    @question.author = current_user
 
     if @question.save
       redirect_to user_path(@question.user), notice: 'Новый вопрос добавлен'
     else
       flash[:alert] = 'Допущены ошибки в вопросе'
 
-      if @question.author.nil?
-        redirect_to user_path(@question.user)
-      else
-        redirect_to new_question_path(user_id: @question.user)
-      end
+      render :new
     end
   end
 
@@ -64,7 +60,7 @@ class QuestionsController < ApplicationController
     else
       flash[:alert] = 'Допущены ошибки в вопросе'
 
-      redirect_to edit_question_path(@question)
+      render :edit
     end
   end
 
