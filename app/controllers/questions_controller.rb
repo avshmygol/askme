@@ -3,8 +3,18 @@ class QuestionsController < ApplicationController
   before_action :set_question_for_current_user, only: %i[edit update toggle_hide destroy]
 
   def index
-    @question = Question.new
-    @questions = Question.all
+    @questions = Question.order(created_at: :desc).last(10)
+    @users = User.order(created_at: :desc).last(10)
+
+    # Destroy empty tags
+    tags = Tag.all
+    tags.each do |tag|
+      if tag.questions.empty?
+        record = Tag.find_by(name: tag.name)
+        record.destroy
+      end
+    end
+
     @tags = Tag.order("name").all.map{ |tag| "#" + tag.name }.join(", ")
   end
 

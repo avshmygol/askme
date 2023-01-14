@@ -1,6 +1,14 @@
 <div class="container">
   <h2 class="title-lg mb">Новый вопрос</h2>
 
+  <% if @question.errors.any? %>
+    <div class="mt">
+      <% @question.errors.full_messages.each do |message| %>
+        <p class="mb-sm text-red"><%= message %></p>
+      <% end %>
+    </div>
+  <% end %>
+
   <p class="mb">для <%= link_to display_nickname(@question.user), user_path(@question.user) %></p>
 
   <%= render 'form', question: @question %>

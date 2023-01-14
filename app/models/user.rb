@@ -9,6 +9,10 @@ class User < ApplicationRecord
     nickname
   end
 
+  include Gravtastic
+  gravtastic(secure: true, filetype: :png, size: 80, default: 'robohash')
+
+
   private
 
   validates :email, presence: true, uniqueness: true, length: { maximum: 100 }, format: { with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i }
