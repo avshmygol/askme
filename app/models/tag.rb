@@ -3,6 +3,8 @@ class Tag < ApplicationRecord
   has_many :questions_tags, dependent: :destroy
   has_many :questions, through: :questions_tags
 
+  REGEXP = /#[[:word:]-]+/
+
   private
 
   validates :name, presence: true, uniqueness: true, length: { maximum: 255 }

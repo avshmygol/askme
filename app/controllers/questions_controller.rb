@@ -43,7 +43,7 @@ class QuestionsController < ApplicationController
     else
       flash[:alert] = 'Допущены ошибки в вопросе'
 
-      render :new
+      render :new, status: 422
     end
   end
 
@@ -60,7 +60,7 @@ class QuestionsController < ApplicationController
     else
       flash[:alert] = 'Допущены ошибки в вопросе'
 
-      render :edit
+      render :edit, status: 422
     end
   end
 

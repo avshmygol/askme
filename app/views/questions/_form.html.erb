@@ -1,7 +1,4 @@
 <%= form_with model: question do |form| %>
-  <% unless question.author.nil? %>
-    <%= form.hidden_field :author_id %>
-  <% end %>
   <%= form.hidden_field :user_id %>
 
   <% current_user.nil? ? placeholder = "Анонимный вопрос" : placeholder = "Вопрос от @#{current_user.nickname}" %>
@@ -14,9 +11,6 @@
     <p><%= form.text_area :answer, rows: 5, class: 'form-text-area' %></p>
   <% end %>
 
-  <p class="mt"><%= form.submit 'Сохранить', class: 'button button-main' %>
-    <% if params[:action] == "edit" %>
-      или <%= link_to 'Вернуться', :back %>
-    <% end %>
+  <p class="mt"><%= form.submit 'Сохранить', class: 'button button-main' %> или <%= link_to 'Вернуться', :back %>
   </p>
 <% end %>

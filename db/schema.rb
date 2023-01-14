@@ -28,6 +28,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_07_095718) do
     t.integer "tag_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["question_id", "tag_id"], name: "unique_question_tag", unique: true
     t.index ["question_id"], name: "index_questions_tags_on_question_id"
     t.index ["tag_id"], name: "index_questions_tags_on_tag_id"
   end
