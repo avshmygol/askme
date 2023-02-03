@@ -8,16 +8,15 @@ class Question < ApplicationRecord
 
   after_save :update_question_tags
 
-  private
-
   validates :body, presence: true, length: { maximum: 280 }
+
+  private
 
   def update_question_tags
     tags.clear
     hashtags = ("#{body.to_s} #{answer.to_s}").downcase.scan(Tag::REGEXP)
     hashtags.uniq.map do |hashtag|
-      tag = Tag.find_or_create_by(name: hashtag.delete("#"))
-      tags << tag
+      self.tags << Tag.create_or_find_by(name: hashtag.delete("#"))
     end
   end
 end

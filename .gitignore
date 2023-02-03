@@ -36,3 +36,6 @@
 
 # User adds
 /config/database.yml
+/public/uploads
+/lib/tasks/001_initial_data.rake
+/lib/tasks/001_initial_data.txt

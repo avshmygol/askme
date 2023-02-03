@@ -6,15 +6,6 @@ class QuestionsController < ApplicationController
     @questions = Question.order(created_at: :desc).last(10)
     @users = User.order(created_at: :desc).last(10)
 
-    # Destroy empty tags
-    tags = Tag.all
-    tags.each do |tag|
-      if tag.questions.empty?
-        record = Tag.find_by(name: tag.name)
-        record.destroy
-      end
-    end
-
     @tags = Tag.order("name").all.map{ |tag| "#" + tag.name }.join(", ")
   end
 
@@ -68,7 +59,8 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to user_path(@question.user), notice: 'Вопрос сохранён'
     else
-      flash[:alert] = 'Допущены ошибки в вопросе'
+      # debugger
+      flash[:alert] = "Допущены ошибки в вопросе"
 
       render :edit, status: 422
     end
