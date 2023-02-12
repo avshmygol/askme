@@ -6,7 +6,7 @@ class Question < ApplicationRecord
   has_many :questions_tags, dependent: :destroy
   has_many :tags, through: :questions_tags
 
-  after_save :update_question_tags
+  after_commit :update_question_tags
 
   validates :body, presence: true, length: { maximum: 280 }
 
