@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :questions do
     put :toggle_hide, on: :member
+    # get :hashtags, on: :member, param: :name
   end
 
   get "/questions/hashtags/:name", to: "questions#hashtags"

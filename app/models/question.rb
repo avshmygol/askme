@@ -14,9 +14,10 @@ class Question < ApplicationRecord
 
   def update_question_tags
     tags.clear
-    hashtags = ("#{body.to_s} #{answer.to_s}").downcase.scan(Tag::REGEXP)
-    hashtags.uniq.map do |hashtag|
-      self.tags << Tag.create_or_find_by(name: hashtag.delete("#"))
-    end
+    hashtags = "#{body.to_s} #{answer.to_s}".downcase.scan(Tag::REGEXP)
+    tags <<
+      hashtags.uniq.map do |hashtag|
+        Tag.create_or_find_by(name: hashtag.delete("#"))
+      end
   end
 end
